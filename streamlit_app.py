@@ -16,7 +16,7 @@ with st.expander('Data'):
   #Splitting x and y 
   X=df.drop(['PCOS'],axis=1)
   y=df['PCOS']
-  st.write('**X**")
+  st.write("**X**")
   X
   st.write("**Y**")
   y
