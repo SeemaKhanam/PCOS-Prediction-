@@ -31,5 +31,10 @@ with st.sidebar:
   Weight_kg=st.number_input("**Weight (Kg)**")
   st.write("The current number is ",Weight_kg)
 
-  Family_History_PCOS=st.selectbox('Family History PCOS',('Yes','No'))
+  Family_History_PCOS=st.selectbox('**Family History PCOS**',('Yes','No'))
+  Menstrual_Irregularity=st.selectbox('**Menstrual Irregularty**',('Yes','No'))
+  Hormonal_Imbalance=st.selectbox('**Hormonal Imbalance**',('Yes','No'))
+  Hyperandrogenism=st.selectbox('**Hyperandrogenism**',('Yes','No'))
+  Hirsutism=st.selectbox('**Hirsutism**',('Yes','No'))
+  Mental_Health=st.selectbox('**Mental Health**',('Yes','No'))
   
