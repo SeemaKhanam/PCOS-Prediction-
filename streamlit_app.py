@@ -15,7 +15,7 @@ with st.expander('Data'):
                    'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                    'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
                    'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty']
-]
+
   
   df = df.drop(columns_to_drop, axis=1, errors='ignore')
   df
