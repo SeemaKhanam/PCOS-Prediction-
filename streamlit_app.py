@@ -41,7 +41,7 @@ with st.sidebar:
     Weight_kg = st.number_input("**Weight (Kg)**")
     Height_ft = st.number_input("**Height (ft)**")  # Add height input
     st.write("The current number is ", Weight_kg)
-    st.write("The current number is ",Height_ft)
+    st.write("The current number is ", Height_ft)
 
     Family_History_PCOS = st.selectbox('**Family History PCOS**', ('Yes', 'No'))
     Menstrual_Irregularity = st.selectbox('**Menstrual Irregularity**', ('Yes', 'No'))
@@ -76,7 +76,7 @@ X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, ran
 LR = LogisticRegression(max_iter=1000)
 LR.fit(X_train, y_train)
 
-# # Prepare the input for prediction
+# Prepare the input for prediction
 data = {
     'Weight_kg': Weight_kg,  # Include Weight_kg
     'Height_ft': Height_ft,  # Include Height
@@ -97,7 +97,7 @@ input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 input_encoded = OHE.transform(input_df.drop(['PCOS_Medication'], axis=1, errors='ignore'))  # Encode the input features
 
 # Combine the input features for prediction
-input_features = np.hstack([[Weight_kg, Height_cm], input_encoded])
+input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])
 
 # Make the prediction
 prediction = LR.predict(input_features.reshape(1, -1))
