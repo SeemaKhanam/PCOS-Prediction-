@@ -108,13 +108,8 @@ df_prediction = pd.DataFrame(prediction_proba, columns=['No', 'Yes'])
 
 # Display final prediction
 st.subheader("Diagnosis")
-st.dataframe(df_prediction.rename(columns={0: 'No', 1: 'Yes'}), hide_index=True)  # Hide index
+st.dataframe(df_prediction.rename(columns={0: 'No', 1: 'Yes'}), hide_index=True)
 
 # Display final prediction
-op = np.array(['No', 'Yes'])
-
-# Ensure y_pred is within the bounds of op
-if y_pred[0] < len(op):
-    st.success(f"Prediction: {op[y_pred[0]]}")  # Access the first prediction directly
-else:
-    st.error("Prediction out of bounds.")
+op = LE.inverse_transform(y_pred)  # Decode the predicted labels back to original labels
+st.success(f"Prediction: {op[0]}")  # Access the first prediction directly
