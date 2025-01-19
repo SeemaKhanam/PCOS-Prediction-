@@ -67,7 +67,8 @@ x_train_new = OHE.fit_transform(X_new)
 
 # Preparing the data for training
 weight_array_train = X['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
-t = np.hstack([weight_array_train, x_train_new])
+height_array_train = X['Height_ft'].values.reshape(-1, 1)  # Ensure Height is also 2D
+t = np.hstack([weight_array_train, height_array_train, x_train_new])  # Combine Weight, Height, and other features
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, random_state=0)
@@ -99,8 +100,7 @@ input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
 # Combine the input features for prediction
-# Reshape Weight and Height to be 2D
-input_features = np.hstack([[Weight_kg, Height_ft], input_encoded.flatten()])  # Flatten input_encoded to 1D
+input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])  # Combine Weight, Height, and encoded features
 
 # Make the prediction
 prediction = LR.predict(input_features.reshape(1, -1))
@@ -110,4 +110,3 @@ if prediction[0] == 1:
     st.success("The model predicts that you have PCOS.")
 else:
     st.success("The model predicts that you do not have PCOS.")
-    
