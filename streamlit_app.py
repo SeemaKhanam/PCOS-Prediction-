@@ -1,85 +1,7 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-
-# Streamlit Title
-st.title(' 👩‍🦰 PCOS Prediction')
-
-st.info('This app will predict whether you have PCOS')
-
-# Data Loading
-with st.expander('Data'):
-    st.write('**Raw Data**')
-    df = pd.read_csv("https://raw.githubusercontent.com/SeemaKhanam/dataset/refs/heads/main/Cleaned-Data.csv")
-    
-    # Selecting only relevant features 
-    columns_to_drop = ['Vegetarian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
-                       'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
-                       'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
-                       'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease', 'Conception_Difficulty',
-                       'Diet_Bread_Cereals', 'Diet_Milk_Products', 'Diet_Fruits', 'Diet_Vegetables',
-                       'Diet_Starchy_Vegetables', 'Diet_NonStarchy_Vegetables', 'Sleep_Hours']
-    
-    df = df.drop(columns=columns_to_drop, axis=1, errors='ignore')
-    st.write(df)
-
-    # Splitting X and y 
-    X = df.drop(['PCOS'], axis=1)
-    y = df['PCOS']
-    st.write("**X**")
-    st.write(X)
-    st.write("**Y**")
-    st.write(y)
-
-# Input features for prediction
-with st.sidebar:
-    st.header("Input Features")
-    Weight_kg = st.number_input("**Weight (Kg)**")
-    Height_ft = st.number_input("**Height (ft)**")  # Add height input
-    st.write("The current number is ", Weight_kg)
-    st.write("The current number is ", Height_ft)
-
-    Family_History_PCOS = st.selectbox('**Family History PCOS**', ('Yes', 'No'))
-    Menstrual_Irregularity = st.selectbox('**Menstrual Irregularity**', ('Yes', 'No'))
-    Hormonal_Imbalance = st.selectbox('**Hormonal Imbalance**', ('Yes', 'No'))
-    Hyperandrogenism = st.selectbox('**Hyperandrogenism**', ('Yes', 'No'))
-    Hirsutism = st.selectbox('**Hirsutism**', ('Yes', 'No'))
-    Mental_Health = st.selectbox('**Mental Health**', ('Yes', 'No'))
-    Insulin_Resistance = st.selectbox('**Insulin Resistance**', ('Yes', 'No'))
-    Diabetes = st.selectbox("**Diabetes**", ('Yes', 'No'))
-    Stress_Level = st.selectbox('**Stress Level**', ('Yes', 'No'))
-    Exercise_Benefit = st.selectbox('**Exercise Benefit**', ('Somewhat', 'Not at All', 'Not Much'))
-    PCOS_Medication = st.text_input("**Taking any PCOS medication**", "")
-    st.write(PCOS_Medication)
-
-# Preprocessing: Label Encoding for target variable
-LE = LabelEncoder()
-y_new = LE.fit_transform(y)
-
-# One-Hot Encoding for features
-OHE = OneHotEncoder(drop='first', sparse_output=False, dtype=np.int32, handle_unknown='ignore')
-X_new = X.copy()  # Make a copy to avoid dropping the original data
-x_train_new = OHE.fit_transform(X_new)
-
-# Preparing the data for training
-weight_height_array_train = np.array([[x['Weight_kg'], x['Height_ft']] for _, x in X.iterrows()])  # Create a 2D array for Weight and Height
-t = np.hstack([weight_height_array_train, x_train_new])  # Combine Weight, Height, and other features
-
-# Train-test split
-X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, random_state=0)
-
-# Train the Logistic Regression model
-LR = LogisticRegression(max_iter=1000)
-LR.fit(X_train, y_train)
-
-# Prepare the input for prediction
+# Prepare the input DataFrame for prediction (input_df)
 data = {
-    'Weight_kg': Weight_kg,  # Include Weight_kg
-    'Height_ft': Height_ft,  # Include Height
+    'Weight_kg': Weight_kg,  
+    'Height_ft': Height_ft,  
     'Family_History_PCOS': Family_History_PCOS,
     'Menstrual_Irregularity': Menstrual_Irregularity,
     'Hormonal_Imbalance': Hormonal_Imbalance,
@@ -95,11 +17,15 @@ data = {
 
 input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 
-# Ensure the input DataFrame has the same columns as the training data
+# One-hot encode the input DataFrame using the same encoder
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
-# Combine the input features for prediction
-input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])  # Combine Weight, Height, and encoded features
+# Align the input DataFrame to match the training data columns (one-hot encoded features)
+expected_columns = OHE.get_feature_names_out(input_df.columns)
+input_encoded = pd.DataFrame(input_encoded, columns=expected_columns)
+
+# Ensure all features (Weight, Height, and one-hot encoded features) are in the correct order
+input_features = np.hstack([[Weight_kg, Height_ft], input_encoded.values])
 
 # Make the prediction
 prediction = LR.predict(input_features.reshape(1, -1))
