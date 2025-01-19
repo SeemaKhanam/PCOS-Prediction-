@@ -60,16 +60,16 @@ X_new=X.drop(['Weight_kg'],axis=1)
 x_train_new=OHE.fit_transform(X_new)
 weight_array = X_train['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
 t=np.hstack([weight_array,x_train_new])
-data={'Family_History_PCOS'=Family_History_PCOS,
-  'Menstrual_Irregularity'=Menstrual_Irregularity,
-  'Hormonal_Imbalance'=Hormonal_Imbalance,
-  'Hyperandrogenism'=Hyperandrogenism,
-  'Hirsutism'=Hirsutism,
-  'Mental_Health'=Mental_Health,
-  'Insulin_Resistance'=Insulin_Resistance,
-  'Diabetes'=Diabetes,
-  'Stress_Level'=Stress_Level,
-  'Exercise_Benefit'=Exercise_Benefit}
+data={'Family_History_PCOS':Family_History_PCOS,
+  'Menstrual_Irregularity':Menstrual_Irregularity,
+  'Hormonal_Imbalance':Hormonal_Imbalance,
+  'Hyperandrogenism':Hyperandrogenism,
+  'Hirsutism':Hirsutism,
+  'Mental_Health':Mental_Health,
+  'Insulin_Resistance':Insulin_Resistance,
+  'Diabetes':Diabetes,
+  'Stress_Level':Stress_Level,
+  'Exercise_Benefit':Exercise_Benefit}
 input_df=pd.DataFrame(data,index=[0])
 encode=df.drop(['Weight_kg'],axis=1)
 input=pd.get_dummies(input_df,prefix=encode)
