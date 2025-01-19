@@ -71,8 +71,8 @@ data={'Family_History_PCOS':Family_History_PCOS,
   'Stress_Level':Stress_Level,
   'Exercise_Benefit':Exercise_Benefit}
 input_df=pd.DataFrame(data,index=[0])
-encode=df.drop(['Weight_kg'],axis=1)
-input=pd.get_dummies(input_df,prefix=encode)
+encode = input_df.columns 
+input = pd.get_dummies(input_df, columns=encode, drop_first=True)
 from sklearn.linear_model import LogisticRegression
 LR=LogisticRegression()
 LR.fit(t,y_new)
