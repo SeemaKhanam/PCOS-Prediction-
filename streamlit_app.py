@@ -17,7 +17,7 @@ with st.expander('Data'):
     df = pd.read_csv("https://raw.githubusercontent.com/SeemaKhanam/dataset/refs/heads/main/Cleaned-Data.csv")
     
     # Selecting only relevant features 
-    columns_to_drop = ['Height_ft', 'Vegetrian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
+    columns_to_drop = ['Height_ft', 'Vegetarian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
                        'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                        'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
                        'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease', 'Conception_Difficulty',
