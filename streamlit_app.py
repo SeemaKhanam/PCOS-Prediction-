@@ -22,5 +22,5 @@ with st.expander('Data'):
   y
 with st.slider:
 st.header("Input Features")
-Weight_kg	PCOS	Family_History_PCOS	Menstrual_Irregularity	Hormonal_Imbalance	Hyperandrogenism	Hirsutism	Mental_Health	Conception_Difficulty	Insulin_Resistance	...	Diet_Fats	Diet_Sweets	Diet_Fried_Food	Diet_Tea_Coffee	Diet_Multivitamin	Vegetarian	Sleep_Hours	Stress_Level	Exercise_Benefit	PCOS_Medication
-  
+Weight_kg=st.number_input("Insert a number")
+st.write("The current number is ", number)
