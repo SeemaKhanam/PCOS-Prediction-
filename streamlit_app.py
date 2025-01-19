@@ -1,3 +1,40 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# Streamlit Title
+st.title(' 👩‍🦰 PCOS Prediction')
+
+st.info('This app will predict whether you have PCOS')
+
+# Data Loading
+with st.expander('Data'):
+    st.write('**Raw Data**')
+    df = pd.read_csv("https://raw.githubusercontent.com/SeemaKhanam/dataset/refs/heads/main/Cleaned-Data.csv")
+    
+    # Selecting only relevant features 
+    columns_to_drop = ['Vegetarian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
+                       'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
+                       'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
+                       'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease', 'Conception_Difficulty',
+                       'Diet_Bread_Cereals', 'Diet_Milk_Products', 'Diet_Fruits', 'Diet_Vegetables',
+                       'Diet_Starchy_Vegetables', 'Diet_NonStarchy_Vegetables', 'Sleep_Hours']
+    
+    df = df.drop(columns=columns_to_drop, axis=1, errors='ignore')
+    st.write(df)
+
+    # Splitting X and y 
+    X = df.drop(['PCOS'], axis=1)
+    y = df['PCOS']
+    st.write("**X**")
+    st.write(X)
+    st.write("**Y**")
+    st.write(y)
+
 # Input features for prediction
 with st.sidebar:
     st.header("Input Features")
@@ -19,7 +56,28 @@ with st.sidebar:
     PCOS_Medication = st.text_input("**Taking any PCOS medication**", "")
     st.write(PCOS_Medication)
 
-# Ensure that variables are initialized and available for the data dictionary
+# Preprocessing: Label Encoding for target variable
+LE = LabelEncoder()
+y_new = LE.fit_transform(y)
+
+# One-Hot Encoding for features
+OHE = OneHotEncoder(drop='first', sparse_output=False, dtype=np.int32, handle_unknown='ignore')
+X_new = X.copy()  # Make a copy to avoid dropping the original data
+x_train_new = OHE.fit_transform(X_new)
+
+# Preparing the data for training
+weight_array_train = X['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
+height_array_train = X['Height_ft'].values.reshape(-1, 1)  # Ensure Height is also 2D
+t = np.hstack([weight_array_train, height_array_train, x_train_new])  # Combine Weight, Height, and other features
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, random_state=0)
+
+# Train the Logistic Regression model
+LR = LogisticRegression(max_iter=1000)
+LR.fit(X_train, y_train)
+
+# Prepare the input for prediction
 data = {
     'Weight_kg': Weight_kg,
     'Height_ft': Height_ft,
@@ -38,7 +96,7 @@ data = {
 
 input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 
-# One-hot encode the input DataFrame using the same encoder
+# Ensure the input DataFrame has the same columns as the training data
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
 # Align the input DataFrame to match the training data columns (one-hot encoded features)
