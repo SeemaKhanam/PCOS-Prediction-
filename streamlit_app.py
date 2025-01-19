@@ -1,7 +1,28 @@
-# Prepare the input DataFrame for prediction (input_df)
+# Input features for prediction
+with st.sidebar:
+    st.header("Input Features")
+    Weight_kg = st.number_input("**Weight (Kg)**", value=50.0)  # Initialize with a default value
+    Height_ft = st.number_input("**Height (ft)**", value=5.5)  # Initialize with a default value
+    st.write("The current weight is ", Weight_kg)
+    st.write("The current height is ", Height_ft)
+
+    Family_History_PCOS = st.selectbox('**Family History PCOS**', ('Yes', 'No'))
+    Menstrual_Irregularity = st.selectbox('**Menstrual Irregularity**', ('Yes', 'No'))
+    Hormonal_Imbalance = st.selectbox('**Hormonal Imbalance**', ('Yes', 'No'))
+    Hyperandrogenism = st.selectbox('**Hyperandrogenism**', ('Yes', 'No'))
+    Hirsutism = st.selectbox('**Hirsutism**', ('Yes', 'No'))
+    Mental_Health = st.selectbox('**Mental Health**', ('Yes', 'No'))
+    Insulin_Resistance = st.selectbox('**Insulin Resistance**', ('Yes', 'No'))
+    Diabetes = st.selectbox("**Diabetes**", ('Yes', 'No'))
+    Stress_Level = st.selectbox('**Stress Level**', ('Yes', 'No'))
+    Exercise_Benefit = st.selectbox('**Exercise Benefit**', ('Somewhat', 'Not at All', 'Not Much'))
+    PCOS_Medication = st.text_input("**Taking any PCOS medication**", "")
+    st.write(PCOS_Medication)
+
+# Ensure that variables are initialized and available for the data dictionary
 data = {
-    'Weight_kg': Weight_kg,  
-    'Height_ft': Height_ft,  
+    'Weight_kg': Weight_kg,
+    'Height_ft': Height_ft,
     'Family_History_PCOS': Family_History_PCOS,
     'Menstrual_Irregularity': Menstrual_Irregularity,
     'Hormonal_Imbalance': Hormonal_Imbalance,
