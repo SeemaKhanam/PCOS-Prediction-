@@ -15,7 +15,7 @@ with st.expander('Data'):
                    'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                    'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
                    'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty','Diet_Bread_Cereals','Diet_Milk_Products','Diet_Fruits	Diet_Vegetables','Diet_Starchy_Vegetables','Diet_NonStarchy_Vegetables','Diet_Fats','Diet_Sweets','Diet_Fried_Food','Diet_Tea_Coffee','Diet_Multivitamin','Vegetarian',
-                    'Diet_Fruits','Diet_Vegetables']
+                    'Diet_Fruits','Diet_Vegetables','Sleep_Hours']
 
 
   
@@ -42,6 +42,10 @@ with st.sidebar:
   Mental_Health=st.selectbox('**Mental Health**',('Yes','No'))
   Insulin_Resistance=st.selectbox('**Insulin Resistance**',('Yes','No'))
   Diabetes=st.selectbox("**Diabetes**",('Yes','No'))
+  Stress_Level=st.selectbox('**Stress_Level**',('Yes','No'))
+  Exercise_Benefit=st.selectbox('**Excersise Benefit**',('Somewhat','Not at All','Not Much'))
+
+
   
 
 
