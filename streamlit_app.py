@@ -75,6 +75,8 @@ LR.fit(X_train, y_train)
 
 # Prepare the input for prediction
 data = {
+    'Weight_kg': Weight_kg,  # Include Weight_kg
+    'PCOS_Medication': PCOS_Medication,  # Include PCOS_Medication
     'Family_History_PCOS': Family_History_PCOS,
     'Menstrual_Irregularity': Menstrual_Irregularity,
     'Hormonal_Imbalance': Hormonal_Imbalance,
@@ -90,7 +92,7 @@ data = {
 input_df = pd.DataFrame(data, index=[0])
 
 # One-Hot Encoding for the input
-input_encoded = OHE.transform(input_df)
+input_encoded = OHE.transform(input_df.drop(columns=['Weight_kg', 'PCOS_Medication']))
 
 # Adding the weight feature for prediction
 weight_array_input = np.array([Weight_kg]).reshape(-1, 1)
