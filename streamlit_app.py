@@ -105,7 +105,7 @@ input_features = np.hstack([np.array([[Weight_kg, Height_ft]]), input_encoded]) 
 prediction = LR.predict(input_features)
 
 # Display the prediction result
-if prediction[0] == 1:
+if prediction[0] == 0:
     st.success("The model predicts that you have PCOS.")
 else:
     st.success("The model predicts that you do not have PCOS.")
