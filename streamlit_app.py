@@ -21,6 +21,6 @@ with st.expander('Data'):
   st.write("**Y**")
   y
 with st.expander("Visualization"):
-  st.scatter_chart(data=df,x='Hyperandrogenism',y='PCOS')
-  st.scatter_chart(data=df,x='Hirsutism',y='PCOS')
+  st.scatter_chart(data=df,y='Hyperandrogenism',x='PCOS')
+  st.scatter_chart(data=df,y='Hirsutism',x='PCOS')
   
