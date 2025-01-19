@@ -25,7 +25,7 @@ with st.expander('Data'):
                        'Diet_Starchy_Vegetables','Diet_NonStarchy_Vegetables','Diet_Fats','Diet_Sweets',
                        'Diet_Fried_Food','Diet_Tea_Coffee','Diet_Multivitamin','Vegetarian','Sleep_Hours']
     
-    df = df.drop(columns_to_drop, axis=1, errors='ignore')
+    df = df.drop(columns=columns_to_drop, axis=1, errors='ignore')
     st.write(df)
 
     # Splitting X and y
@@ -59,7 +59,7 @@ y_new = LE.fit_transform(y)
 
 # One-Hot Encoding for features
 OHE = OneHotEncoder(drop='first', sparse_output=False, dtype=np.int32, handle_unknown='ignore')
-X_new = X.drop(['Weight_kg'], axis=1)
+X_new = X.copy()  # Make a copy to avoid dropping the original data
 x_train_new = OHE.fit_transform(X_new)
 
 # Preparing the data for training
@@ -90,11 +90,7 @@ data = {
 input_df = pd.DataFrame(data, index=[0])
 
 # One-Hot Encoding for the input
-input_encoded = pd.get_dummies(input_df, drop_first=True)
-
-# Ensure input_encoded matches the training columns by adding missing columns
-expected_columns = OHE.get_feature_names_out(input_df.columns)
-input_encoded = input_encoded.reindex(columns=expected_columns, fill_value=0)
+input_encoded = OHE.transform(input_df)
 
 # Adding the weight feature for prediction
 weight_array_input = np.array([Weight_kg]).reshape(-1, 1)
@@ -106,11 +102,11 @@ prediction_proba = LR.predict_proba(input_encoded)
 
 # Display the prediction result
 df_prediction = pd.DataFrame(prediction_proba, columns=['No', 'Yes'])
-df_prediction = df_prediction.rename(columns={0: 'No', 1: 'Yes'})
 
+# Display final prediction
 st.subheader("Diagnosis")
 st.dataframe(df_prediction)
 
 # Display final prediction
-op = np.array(['Yes', 'No'])
+op = np.array(['No', 'Yes'])
 st.success(f"Prediction: {op[y_pred][0]}")
