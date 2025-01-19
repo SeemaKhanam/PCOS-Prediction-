@@ -82,7 +82,7 @@ data = {
     'Hormonal_Imbalance': Hormonal_Imbalance,
     'Hyperandrogenism': Hyperandrogenism,
     'Hirsutism': Hirsutism,
-    'Mental_Health': Mental _Health,
+    'Mental_Health': Mental_Health,
     'Insulin_Resistance': Insulin_Resistance,
     'Diabetes': Diabetes,
     'Stress_Level': Stress_Level,
