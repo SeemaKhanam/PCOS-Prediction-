@@ -21,6 +21,6 @@ with st.expander('Data'):
   st.write("**Y**")
   y
 with st.slider:
-st.header("Input Features")
-Weight_kg=st.number_input("Insert a number")
-st.write("The current number is ", number)
+  st.header("Input Features")
+  Weight_kg=st.number_input("Insert a number")
+  st.write("The current number is ", number)
