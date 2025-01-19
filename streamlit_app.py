@@ -99,15 +99,11 @@ input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 # Ensure the input DataFrame has the same columns as the training data
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
-# Align the input DataFrame to match the training data columns (one-hot encoded features)
-expected_columns = OHE.get_feature_names_out(input_df.columns)
-input_encoded = pd.DataFrame(input_encoded, columns=expected_columns)
-
-# Ensure all features (Weight, Height, and one-hot encoded features) are in the correct order
-input_features = np.hstack([[Weight_kg, Height_ft], input_encoded.values])
+# Convert input features to 2D array for concatenation
+input_features = np.hstack([np.array([[Weight_kg, Height_ft]]), input_encoded])  # Ensure input is 2D
 
 # Make the prediction
-prediction = LR.predict(input_features.reshape(1, -1))
+prediction = LR.predict(input_features)
 
 # Display the prediction result
 if prediction[0] == 1:
