@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 # Streamlit Title
 st.title(' 👩‍🦰 PCOS Prediction')
@@ -20,15 +20,14 @@ with st.expander('Data'):
     columns_to_drop = ['Height_ft', 'Vegetrian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
                        'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                        'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
-                       'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty',
-                       'Diet_Bread_Cereals','Diet_Milk_Products','Diet_Fruits','Diet_Vegetables',
-                       'Diet_Starchy_Vegetables','Diet_NonStarchy_Vegetables','Diet_Fats','Diet_Sweets',
-                       'Diet_Fried_Food','Diet_Tea_Coffee','Diet_Multivitamin','Vegetarian','Sleep_Hours']
+                       'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease', 'Conception_Difficulty',
+                       'Diet_Bread_Cereals', 'Diet_Milk_Products', 'Diet_Fruits', 'Diet_Vegetables',
+                       'Diet_Starchy_Vegetables', 'Diet_NonStarchy_Vegetables', 'Sleep_Hours']
     
     df = df.drop(columns=columns_to_drop, axis=1, errors='ignore')
     st.write(df)
 
-    # Splitting X and y
+    # Splitting X and y 
     X = df.drop(['PCOS'], axis=1)
     y = df['PCOS']
     st.write("**X**")
@@ -40,6 +39,8 @@ with st.expander('Data'):
 with st.sidebar:
     st.header("Input Features")
     Weight_kg = st.number_input("**Weight (Kg)**")
+    st.write("The current number is ", Weight_kg)
+
     Family_History_PCOS = st.selectbox('**Family History PCOS**', ('Yes', 'No'))
     Menstrual_Irregularity = st.selectbox('**Menstrual Irregularity**', ('Yes', 'No'))
     Hormonal_Imbalance = st.selectbox('**Hormonal Imbalance**', ('Yes', 'No'))
@@ -63,7 +64,7 @@ X_new = X.copy()  # Make a copy to avoid dropping the original data
 x_train_new = OHE.fit_transform(X_new)
 
 # Preparing the data for training
-weight_array_train = X['Weight_kg'].values.reshape(-1, 1)
+weight_array_train = X['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
 t = np.hstack([weight_array_train, x_train_new])
 
 # Train-test split
@@ -76,23 +77,23 @@ LR.fit(X_train, y_train)
 # Prepare the input for prediction
 data = {
     'Weight_kg': Weight_kg,  # Include Weight_kg
-    'PCOS_Medication': PCOS_Medication,  # Include PCOS_Medication
     'Family_History_PCOS': Family_History_PCOS,
     'Menstrual_Irregularity': Menstrual_Irregularity,
     'Hormonal_Imbalance': Hormonal_Imbalance,
     'Hyperandrogenism': Hyperandrogenism,
     'Hirsutism': Hirsutism,
-    'Mental_Health': Mental_Health,
+    'Mental_Health': Mental _Health,
     'Insulin_Resistance': Insulin_Resistance,
     'Diabetes': Diabetes,
     'Stress_Level': Stress_Level,
-    'Exercise_Benefit': Exercise_Benefit
+    'Exercise_Benefit': Exercise_Benefit,
+    'PCOS_Medication': PCOS_Medication
 }
 
 input_df = pd.DataFrame(data, index=[0])
 
 # One-Hot Encoding for the input
-input_encoded = OHE.transform(input_df.drop(columns=['Weight_kg', 'PCOS_Medication']))
+input_encoded = OHE.transform(input_df.drop(columns=['Weight_kg', 'PCOS_Medication'], errors='ignore'))
 
 # Adding the weight feature for prediction
 weight_array_input = np.array([Weight_kg]).reshape(-1, 1)
@@ -107,7 +108,7 @@ df_prediction = pd.DataFrame(prediction_proba, columns=['No', 'Yes'])
 
 # Display final prediction
 st.subheader("Diagnosis")
-st.dataframe(df_prediction)
+st.dataframe(df_prediction.rename(columns={0: 'No', 1: 'Yes'}))
 
 # Display final prediction
 op = np.array(['No', 'Yes'])
