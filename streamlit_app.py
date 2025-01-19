@@ -30,3 +30,6 @@ with st.sidebar:
   st.header("Input Features")
   Weight_kg=st.number_input("**Weight (Kg)**")
   st.write("The current number is ",Weight_kg)
+
+  Family_History_PCOS=st.selectbox('Family History PCOS',('Yes','No'))
+  
