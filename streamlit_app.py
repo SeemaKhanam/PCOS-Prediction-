@@ -13,3 +13,10 @@ with st.expander('Data'):
   #Selecting only relevent features 
   df=df.drop(['Height_ft','Diet_Bread_Cereals','Age','Marital_Status','Exercise_Frequency','Exercise_Type','Exercise_Duration','Smoking','Childhood_Trauma','Cardiovascular_Disease'],axis=1)
   df
+  #Splitting x and y 
+  X=df.drop(['PCOS'],axis=1)
+  y=df['PCOS']
+  st.write('**X**")
+  X
+  st.write("**Y**")
+  y
