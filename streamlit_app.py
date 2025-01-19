@@ -14,7 +14,8 @@ with st.expander('Data'):
   columns_to_drop = ['Height_ft', 'Vegetrian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
                    'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                    'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
-                   'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease']
+                   'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty']
+]
   
   df = df.drop(columns_to_drop, axis=1, errors='ignore')
   df
@@ -37,4 +38,9 @@ with st.sidebar:
   Hyperandrogenism=st.selectbox('**Hyperandrogenism**',('Yes','No'))
   Hirsutism=st.selectbox('**Hirsutism**',('Yes','No'))
   Mental_Health=st.selectbox('**Mental Health**',('Yes','No'))
+  Insulin_Resistance=st.selectbox('**Insulin Resistance**',('Yes','No'))
+  Diabetes=st.selectbox("**Diabetes**",('Yes','No'))
+  
+
+
   
