@@ -20,3 +20,6 @@ with st.expander('Data'):
   X
   st.write("**Y**")
   y
+with st.expander("Visualization"):
+  st.scatter_chart(data=df,x='Hyperandrogenism',y='Hirsutism',color='PCOS')
+  
