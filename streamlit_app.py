@@ -111,5 +111,6 @@ st.subheader("Diagnosis")
 st.dataframe(df_prediction.rename(columns={0: 'No', 1: 'Yes'}))
 
 # Display final prediction
+# Display final prediction
 op = np.array(['No', 'Yes'])
-st.success(f"Prediction: {op[y_pred][0]}")
+st.success(f"Prediction: {op[y_pred[0]]}")  # Access the first prediction directly
