@@ -91,6 +91,8 @@ input_df = pd.DataFrame(data, index=[0])
 
 # One-Hot Encoding for the input
 input_encoded = pd.get_dummies(input_df, drop_first=True)
+
+# Reindex input_encoded to match the training data columns
 input_encoded = input_encoded.reindex(columns=X.columns, fill_value=0)
 
 # Adding the weight feature for prediction
