@@ -21,5 +21,6 @@ with st.expander('Data'):
   st.write("**Y**")
   y
 with st.expander("Visualization"):
-  st.bar_chart(data=df,x='Hyperandrogenism',y='Hirsutism',color='PCOS')
+  st.bar_chart(data=df,x='Hyperandrogenism',y='PCOS')
+  st.bar_chart(data=df,x='Hirsutism',y='PCOS')
   
