@@ -44,9 +44,8 @@ with st.sidebar:
   Diabetes=st.selectbox("**Diabetes**",('Yes','No'))
   Stress_Level=st.selectbox('**Stress_Level**',('Yes','No'))
   Exercise_Benefit=st.selectbox('**Excersise Benefit**',('Somewhat','Not at All','Not Much'))
-  print("")
-  st.write("**Taking any PCOS medication**")
-  PCOS_Medication=st.text_input("")
+ 
+  PCOS_Medication=st.text_input("**Taking any PCOS medication","Enter")
   st.write(PCOS_Medication)
 
 
