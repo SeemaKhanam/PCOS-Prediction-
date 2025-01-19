@@ -17,7 +17,7 @@ with st.expander('Data'):
     df = pd.read_csv("https://raw.githubusercontent.com/SeemaKhanam/dataset/refs/heads/main/Cleaned-Data.csv")
     
     # Selecting only relevant features 
-    columns_to_drop = ['Height_ft', 'Vegetarian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
+    columns_to_drop = ['Vegetarian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
                        'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                        'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
                        'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease', 'Conception_Difficulty',
@@ -39,7 +39,9 @@ with st.expander('Data'):
 with st.sidebar:
     st.header("Input Features")
     Weight_kg = st.number_input("**Weight (Kg)**")
+    Height_ft = st.number_input("**Height (ft)**")  # Add height input
     st.write("The current number is ", Weight_kg)
+    st.write("The current number is ",Height_ft)
 
     Family_History_PCOS = st.selectbox('**Family History PCOS**', ('Yes', 'No'))
     Menstrual_Irregularity = st.selectbox('**Menstrual Irregularity**', ('Yes', 'No'))
@@ -74,9 +76,10 @@ X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, ran
 LR = LogisticRegression(max_iter=1000)
 LR.fit(X_train, y_train)
 
-# Prepare the input for prediction
+# # Prepare the input for prediction
 data = {
     'Weight_kg': Weight_kg,  # Include Weight_kg
+    'Height_ft': Height_ft,  # Include Height
     'Family_History_PCOS': Family_History_PCOS,
     'Menstrual_Irregularity': Menstrual_Irregularity,
     'Hormonal_Imbalance': Hormonal_Imbalance,
@@ -90,26 +93,17 @@ data = {
     'PCOS_Medication': PCOS_Medication
 }
 
-input_df = pd.DataFrame(data, index=[0])
+input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
+input_encoded = OHE.transform(input_df.drop(['PCOS_Medication'], axis=1, errors='ignore'))  # Encode the input features
 
-# One-Hot Encoding for the input
-input_encoded = OHE.transform(input_df)
+# Combine the input features for prediction
+input_features = np.hstack([[Weight_kg, Height_cm], input_encoded])
 
-# Adding the weight feature for prediction
-weight_array_input = np.array([Weight_kg]).reshape(-1, 1)
-input_encoded = np.hstack([weight_array_input, input_encoded])
-
-# Predict the outcome
-y_pred = LR.predict(input_encoded)
-prediction_proba = LR.predict_proba(input_encoded)
+# Make the prediction
+prediction = LR.predict(input_features.reshape(1, -1))
 
 # Display the prediction result
-df_prediction = pd.DataFrame(prediction_proba, columns=['No', 'Yes'])
-
-# Display final prediction
-st.subheader("Diagnosis")
-st.dataframe(df_prediction.rename(columns={0: 'No', 1: 'Yes'}), hide_index=True)
-
-# Display final prediction
-op = LE.inverse_transform(y_pred)  # Decode the predicted labels back to original labels
-st.success(f"Prediction: {op[0]}")  # Access the first prediction directly
+if prediction[0] == 1:
+    st.success("The model predicts that you have PCOS.")
+else:
+    st.success("The model predicts that you do not have PCOS.")
