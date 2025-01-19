@@ -48,10 +48,21 @@ with st.sidebar:
   PCOS_Medication=st.text_input("**Taking any PCOS medication**","")
   st.write(PCOS_Medication)
 
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
+LE=LabelEncoder()
+y_new=LE.fit_transform(y)
+X_train,X_test,y_train,y_test=train_test_split(X,y_new,test_size=0.2,random_state=0)
 
-
-  
+OHE=OneHotEncoder(drop='first',sparse_output=False,dtype=np.int32,handle_unknown='ignore')
+X_new=X_train.drop(['Weight_Kg'],axis=1)
+X_new_test=X_test.drop(['Weight_Kg'],axis=1)
+x_train_new=OHE.fit_transform(X_new)
+x_test_new=OHE.transform(X_new_test)
+t=np.hstack([X_train['Weight_kg'],x_train_new])
+t
 
 
   
