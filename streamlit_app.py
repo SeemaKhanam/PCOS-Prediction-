@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -67,9 +66,8 @@ X_new = X.copy()  # Make a copy to avoid dropping the original data
 x_train_new = OHE.fit_transform(X_new)
 
 # Preparing the data for training
-weight_array_train = X['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
-height_array_train = X['Height_ft'].values.reshape(-1, 1)  # Ensure Height is also 2D
-t = np.hstack([weight_array_train, height_array_train, x_train_new])  # Combine Weight, Height, and other features
+weight_height_array_train = np.array([[x['Weight_kg'], x['Height_ft']] for _, x in X.iterrows()])  # Create a 2D array for Weight and Height
+t = np.hstack([weight_height_array_train, x_train_new])  # Combine Weight, Height, and other features
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, random_state=0)
