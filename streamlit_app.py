@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 
 # Streamlit Title
 st.title(' 👩‍🦰 PCOS Prediction')
@@ -33,6 +34,10 @@ with st.expander('Data'):
     st.write(X)
     st.write("**Y**")
     st.write(y)
+
+    # Checking the class distribution of the target variable
+    st.write("Class distribution of target variable (PCOS):")
+    st.write(y.value_counts())
 
 # Input features for prediction
 with st.sidebar:
@@ -76,6 +81,11 @@ X_train, X_test, y_train, y_test = train_test_split(t, y_new, test_size=0.2, ran
 LR = LogisticRegression(max_iter=1000)
 LR.fit(X_train, y_train)
 
+# Evaluate model accuracy on the test set
+y_pred = LR.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+st.write(f"Model Accuracy on Test Data: {accuracy * 100:.2f}%")
+
 # Prepare the input for prediction
 data = {
     'Weight_kg': Weight_kg,
@@ -105,7 +115,7 @@ input_features = np.hstack([np.array([[Weight_kg, Height_ft]]), input_encoded]) 
 prediction = LR.predict(input_features)
 
 # Display the prediction result
-if prediction[0] == 0:
+if prediction[0] == 1:
     st.success("The model predicts that you have PCOS.")
 else:
     st.success("The model predicts that you do not have PCOS.")
