@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -100,7 +101,6 @@ input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
 # Combine the input features for prediction
-# Reshape Weight and Height to be 2D
 input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])  # Combine Weight, Height, and encoded features
 
 # Make the prediction
