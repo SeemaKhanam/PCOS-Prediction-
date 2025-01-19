@@ -72,7 +72,8 @@ data={'Family_History_PCOS':Family_History_PCOS,
   'Exercise_Benefit':Exercise_Benefit}
 input_df=pd.DataFrame(data,index=[0])
 encode = input_df.columns 
-input = pd.get_dummies(input_df, columns=encode, drop_first=True)
+input_encoded= pd.get_dummies(input_df, columns=encode, drop_first=True)
+input_encoded = input_encoded.reindex(columns=X_train.columns, fill_value=0)
 from sklearn.linear_model import LogisticRegression
 LR=LogisticRegression()
 LR.fit(t,y_new)
