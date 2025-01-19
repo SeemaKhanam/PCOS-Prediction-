@@ -93,7 +93,7 @@ data = {
 input_df = pd.DataFrame(data, index=[0])
 
 # One-Hot Encoding for the input
-input_encoded = OHE.transform(input_df.drop(columns=['Weight_kg', 'PCOS_Medication'], errors='ignore'))
+input_encoded = OHE.transform(input_df)
 
 # Adding the weight feature for prediction
 weight_array_input = np.array([Weight_kg]).reshape(-1, 1)
