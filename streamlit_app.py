@@ -99,7 +99,8 @@ input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
 input_encoded = OHE.transform(input_df)  # Encode the input features
 
 # Combine the input features for prediction
-input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])  # Reshape Weight and Height to 2D
+# Reshape Weight and Height to be 2D
+input_features = np.hstack([[Weight_kg, Height_ft], input_encoded.flatten()])  # Flatten input_encoded to 1D
 
 # Make the prediction
 prediction = LR.predict(input_features.reshape(1, -1))
@@ -109,3 +110,4 @@ if prediction[0] == 1:
     st.success("The model predicts that you have PCOS.")
 else:
     st.success("The model predicts that you do not have PCOS.")
+    
