@@ -58,7 +58,7 @@ y_new=LE.fit_transform(y)
 OHE=OneHotEncoder(drop='first',sparse_output=False,dtype=np.int32,handle_unknown='ignore')
 X_new=X.drop(['Weight_kg'],axis=1)
 x_train_new=OHE.fit_transform(X_new)
-weight_array = X_train['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
+weight_array = X['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
 t=np.hstack([weight_array,x_train_new])
 data={'Family_History_PCOS':Family_History_PCOS,
   'Menstrual_Irregularity':Menstrual_Irregularity,
