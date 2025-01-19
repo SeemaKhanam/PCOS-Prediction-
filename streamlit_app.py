@@ -29,5 +29,5 @@ with st.expander('Data'):
 with st.sidebar:
   st.header("Input Features")
   st.subheader('Weight (Kg)')
-  Weight_kg=st.number_input("Insert a Weight")
+  Weight_kg=st.number_input("")
   st.write("The current number is ",Weight_kg)
