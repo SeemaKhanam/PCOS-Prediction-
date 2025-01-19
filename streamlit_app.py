@@ -14,7 +14,8 @@ with st.expander('Data'):
   columns_to_drop = ['Height_ft', 'Vegetrian', 'Diet_Fats', 'Diet_Sweets', 'Diet_Fried_Food', 
                    'Diet_Tea_Coffee', 'Diet_Multivitamin', 'Diet_Bread_Cereals', 'Age', 
                    'Marital_Status', 'Exercise_Frequency', 'Exercise_Type', 'Exercise_Duration', 
-                   'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty','Diet_Bread_Cereals','Diet_Milk_Products','Diet_Fruits	Diet_Vegetables','Diet_Starchy_Vegetables','Diet_NonStarchy_Vegetables','Diet_Fats','Diet_Sweets','Diet_Fried_Food','Diet_Tea_Coffee','Diet_Multivitamin','Vegetarian']
+                   'Smoking', 'Childhood_Trauma', 'Cardiovascular_Disease','Conception_Difficulty','Diet_Bread_Cereals','Diet_Milk_Products','Diet_Fruits	Diet_Vegetables','Diet_Starchy_Vegetables','Diet_NonStarchy_Vegetables','Diet_Fats','Diet_Sweets','Diet_Fried_Food','Diet_Tea_Coffee','Diet_Multivitamin','Vegetarian',
+                    'Diet_Fruits','Diet_Vegetables']
 
 
   
