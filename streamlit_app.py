@@ -90,11 +90,13 @@ data = {
     'Diabetes': Diabetes,
     'Stress_Level': Stress_Level,
     'Exercise_Benefit': Exercise_Benefit,
-    'PCOS_Medication': PCOS_Medication
+    'PCOS_Medication': PCOS_Medication  # Include PCOS_Medication
 }
 
 input_df = pd.DataFrame(data, index=[0])  # Create a DataFrame for the input
-input_encoded = OHE.transform(input_df.drop(['PCOS_Medication'], axis=1, errors='ignore'))  # Encode the input features
+
+# Ensure the input DataFrame has the same columns as the training data
+input_encoded = OHE.transform(input_df)  # Encode the input features
 
 # Combine the input features for prediction
 input_features = np.hstack([[Weight_kg, Height_ft], input_encoded])
