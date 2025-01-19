@@ -63,7 +63,8 @@ x_train_new=OHE.fit_transform(X_new)
 x_test_new=OHE.transform(X_new_test)
 weight_array = X_train['Weight_kg'].values.reshape(-1, 1)  # Ensure it's 2D
 t=np.hstack([weight_array,x_train_new])
-t
+weight_array2 = X_test['Weight_kg'].values.reshape(-1, 1)
+p=np.hstack([weight_array2, x_test_new])
 
 
   
